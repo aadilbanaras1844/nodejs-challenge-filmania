@@ -16,3 +16,8 @@ Architecture of the project
  * public folder will have assests  like images, js, css etc
  * helper folder will have function used in project
  
+## Run project command
+# npm start
+
+## Seed databse command
+# npm run seed
