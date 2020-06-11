@@ -2,8 +2,10 @@
 
 var express = require('express')
 var router = express.Router()
+const multer = require('multer');
 
-const { filmService } = require("../../services/index");
+const { filmService, commentService } = require("../../services/index");
+var upload = multer({ dest: 'src/public/images/' })
 
 // get Films
 router.get('/', async function (req, res) {
@@ -15,27 +17,37 @@ router.get('/', async function (req, res) {
     }
 });
 
+
 // // get Film Detail
-router.get('/:id', async function (req, res) {
-    let film_id = req.params.id;
+router.get('/:slug', async function (req, res) {
+    let slug = req.params.slug;
     try {
-        let film= await filmService.getFilmById( film_id );
-        res.json({status: true, data: film})  
+        let film = await filmService.getFilmBySlug( slug );
+        // console.log(film._id)
+        let comments = await commentService.getFilmComment(film._id);
+        film['comments'] = comments;
+        return res.json({status: true, data: film})  
     } catch (error) {
         return res.json(error)
     }
     
 });
 
+
 // // add Film
 router.post('/', async function(req, res){
     let params = req.body;
+    // console.log(req.body)
     try {
         let film= await filmService.createFilm( params );
         res.json({status: true, data: film})  
     } catch (error) {
         return res.json(error)
     }
+});
+
+router.post('/upload-image', upload.single('photo'), async function(req, res){
+    return res.json( req.file );
 });
 
 // // Update Fil
@@ -61,4 +73,6 @@ router.delete('/:id', async  function(req, res){
     }
 });
     
+
+
 module.exports = router;

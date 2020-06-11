@@ -13,10 +13,10 @@ module.exports.getFilms = async( ) => {
     }
 };
 
-module.exports.getFilmById = async( film_id ) => {
+module.exports.getFilmBySlug = async( slug ) => {
     try {
-        let film = await filmModel.findById(ObjectId(film_id));
-        return film;    
+        let film = await filmModel.findOne({slug});
+        return film;
     } catch (error) {
         return error
     }

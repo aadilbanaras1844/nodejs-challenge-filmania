@@ -1,14 +1,54 @@
-
-
 {% extends './../layout.html' %}
 
 {% block title %}hhh{% endblock %}
 
 
 {% block content %}
+<a class="btn btn-primary float-right" href="/films/create">
+    Create Film
 
+</a>
 <h1>
-    show films here
+    Films
 </h1>
 
+
+<div class="row">
+
+    
+
+    {% for film in films %}
+    <div class=" col-sm-3">
+      <div class="card p-3 " >
+        <blockquote class="blockquote mb-0 card-body">
+          <p>
+            <a href="/films/{{film.slug}}">
+                {{ film.name }}
+            </a>
+          </p>
+          <footer class="blockquote-footer">
+            <small class="text-muted">
+              {{ film.release_date | date('Y-m-d') }} <br>
+              <cite title="Source Title">{{film.description}}</cite>
+            </small>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+        
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
+
+
+{% block styles %}
+<style>
+  .card{
+    margin-bottom: 10px;
+    height: 200px;
+  }
+</style>
 {% endblock %}

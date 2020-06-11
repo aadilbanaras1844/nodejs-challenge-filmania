@@ -1,0 +1,61 @@
+{% extends './../layout.html' %}
+
+{% block title %}hhh{% endblock %}
+
+
+{% block content %}
+<h1>
+    Film Detail
+</h1>
+<div class="card-deck">
+
+    <div class="card p-3">
+        <blockquote class="blockquote mb-0 card-body">
+            <p>
+                {{ film.name }}
+                <img class="float-right" style="width: 200px; height: 150px;" src="/static/images/{{ film.photo_path }}">
+
+            </p>
+            <footer class="blockquote-footer">
+                <small class="text-muted">
+                    {{ film.release_date | date('Y-m-d') }} <br>
+                    <cite title="Source Title">{{film.description}}</cite>
+                </small>
+            </footer>
+        </blockquote>
+    </div>
+</div>
+<div>
+    {% if email == ''  %}
+    <p>Only registerd users can comment</p>
+    {% else %}
+    <form id="commentForm" action="/films/{{film.slug}}/comment" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="hidden" name="film_id" value="{{film._id}}">
+                <input type="hidden" name="slug" value="{{film.slug}}">
+                <label for="inputComment">Comments</label>
+                <textarea rows="3" class="form-control" id="inputComment" name="text"
+                    placeholder="Description"></textarea>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputComment">&nbsp; <br> </label>
+                <button type="submit" class="btn btn-primary d-flex">Post</button>
+            </div>
+        </div>
+
+    </form>
+    {% endif %}
+</div>
+
+<div>
+    <ul>
+        {% for comment in film.comments %}
+        <li>
+            {{comment.text}}
+        </li>
+        {% endfor %}
+    </ul>
+    
+</div>
+{% endblock %}

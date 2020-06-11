@@ -3,18 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    first_name: {
-        type: String,
-        required: "What is Your First Name?",
-        minlength: 2,
-        maxlength: 15,
-    },
-    last_name: {
-        type: String,
-        required: "What is Your Last Name?",
-        minlength: 2,
-        maxlength: 15,
-    },
     email: {
         type: String,
         required: "What is Your Email?",

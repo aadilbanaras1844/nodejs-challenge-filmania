@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/static/css/main.css">
+    {% block styles %}
+    {% endblock %}
   </head>
   <body>
 
@@ -24,31 +26,33 @@
               <li class="nav-item">
                 <a class="nav-link" href="/films">Films</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Signup / Login</a>
-              </li>   
+             
+              {% if email == ''  %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">Login</a>
+                </li> 
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">Register</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout</a>
+                </li>
+              {% endif %}
+                 
             </ul>
           </div>  
         </nav>
         
         <div class="container" id="main-div" style="margin-top:30px">
-          <div class="row">
-            <div class="col-sm-4">
-              <h2>About Me</h2>
-              <h5>Photo of me:</h5>
-              <div class="fakeimg">Fake Image</div>
-              <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-              
-              <hr class="d-sm-none">
-            </div>
-            <div class="col-sm-8">
+
+            <div class="col-sm-12">
               
                 {% block content %}
                 {% endblock %}
 
               
             </div>
-          </div>
         </div>
         
         <div class="jumbotron text-center" style="margin-bottom:0">
@@ -61,5 +65,7 @@
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/bootstrap/js/bootstrap.min.js">
     <script type="text/javascript" src="/static/js/main.js"></script>
+    {% block scripts %}
+    {% endblock %}
   </body>
 </html>

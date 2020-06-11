@@ -7,10 +7,18 @@ const express = require("express");
 const routes = require("./routes");
 const config = require('./config');
 const path = require("path");
+var session = require('express-session')
 
 require('./config/db.mongo')();
 
 const app = express();
+
+// for sessions
+var sess = {
+    secret: 'keyboard cat',
+    cookie: {}
+}   
+app.use(session(sess))
 
 // setting view engine templates
 const swig = require('swig')
@@ -27,6 +35,7 @@ app.use('/static', express.static('src/public'))
 // for apis
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 routes(app);
 

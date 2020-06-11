@@ -1,0 +1,155 @@
+{% extends './../layout.html' %}
+
+{% block title %}hhh{% endblock %}
+
+
+{% block content %}
+<h1>
+    Create Film
+</h1>
+
+<div class="col-sm-8">
+    <form id="filmForm" action="/api/films" name="filmForm" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputName4">Movie Name</label>
+                <input type="text" class="form-control" id="inputName4" name="name" placeholder="Movie Name">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputreleaseDate4">Release Date</label>
+                <input type="date" class="form-control" id="inputreleaseDate4" name="release_date"
+                    placeholder="Release Date">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="inputRating4">Rating</label>
+                <select id="inputRating4" class="form-control" name="rating" placeholder=Rating>
+                    <option selected>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputTicketPricec4">Ticket Price</label>
+                <input type="number" class="form-control" id="inputTicketPricec4" name="ticket_price"
+                    placeholder="Ticket Price">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputCountry4">Country</label>
+                <input type="text" class="form-control" id="inputCountry4" name="country" placeholder="Country">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="inputGenre4">Genre</label>
+                <input type="text" class="form-control" id="inputGenre4" name="genre" placeholder="Genre">
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="inputDescription4">Description</label>
+                <textarea rows="3" class="form-control" id="inputDescription4" name="description"
+                    placeholder="Description"></textarea>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-group">
+                    <label for="inputFile4">Photo</label>
+                    <input type="hidden" name="photo_path" id="photo_path">
+                    <input type="file" class="form-control-file" id="inputFile4" name="photo" placeholder="photo">
+                </div>
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary float-right">Create</button>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+
+
+    $(document).ready(function(){
+    
+        $('#inputFile4').change(function(event){
+            let url = '/api/films/upload-image';
+            const files = event.target.files;
+            const formData = new FormData()
+            formData.append('photo', files[0])
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                contentType: "multipart/form-data"
+            })
+            .then(response => response.json())
+            .then(data => {
+                $('#photo_path').val(data.filename);
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        })
+       
+    $("#filmForm").submit(function(e){
+        createFilm();
+        e.preventDefault();
+        // return false;
+    });
+    
+    });
+    
+        function createFilm() {
+            var elements = document.forms["filmForm"].elements;
+            let errors = [];
+            let params = {};
+            for (let i = 0; i < elements.length; i++) {
+                const element = elements[i];
+                params[ element.name ] = element.value;
+                if (element.placeholder && element.value == '') {
+                    errors.push({
+                        field: element.placeholder,
+                        value: element.value
+                    });
+                }
+            }
+            let photoFile = elements["photo"]['files'][0];
+           
+            if(errors.length > 0){
+                alert('Fill the  form completely');
+                return  false;
+            }
+
+            $.ajax( {
+                url: '/api/films',
+                type: 'POST',
+                data: params,
+                // processData: false,
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function( data ) {
+                if(data.status == true){
+                    window.location.href = '/films'
+                }
+                else {
+                    alert('error adding film')
+                }
+            });
+        
+            
+            
+            // var filmForm = $('#filmForm');
+            // console.log(x);
+            return false;
+        }
+
+    </script>
+{% endblock %}

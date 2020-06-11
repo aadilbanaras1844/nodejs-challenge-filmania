@@ -14,8 +14,7 @@ module.exports.createUser = ( params ) => {
             newUser.password = await encryptPassword(newUser.password);
 
             const userAdded = await newUser.save();
-            const token = newUser.generateAuthToken();
-            return resolve({user: userAdded, token})              
+            return resolve({user: userAdded})              
         } catch (error) {
             return reject(error)
         }
@@ -31,16 +30,10 @@ module.exports.loginUser = ( email, password ) => {
         let user = await userModel.findOne({ email: email });
         if (!user) return reject(new Error("User not found"));
         const passwordMatch = await comparePassword(password, user.password);
-        if( passwordMatch ){
-            const token = user.generateAuthToken();
-            
+        if( passwordMatch ){            
             return resolve({
-                token: token,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.contact_email,
-                is_organiser: user.is_organiser,
-                is_traveller: user.is_traveller
+                email: user.email,
+                user_id: user._id
             }) 
        }
        else {

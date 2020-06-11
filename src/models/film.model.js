@@ -1,5 +1,7 @@
 
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
 const FilmSchema = new Schema({
@@ -10,8 +12,10 @@ const FilmSchema = new Schema({
     ticket_price: { type: Number, default: null },
     country: { type: String, required: true },
     genre: { type: String, required: true },
-    photo: { type: String, required: true },
-
+    photo: { type: String, required: false },
+    photo_path: { type: String, required: true },
+    comments: [{ type: Object }],
+    slug: { type: String, slug: "name", unique: true },
     // room_type: [{ type: String, enum : ['all','family', 'gent', 'ladies', 'couple']}],
     // created_by: { type: String, required: true, minlength: 2, maxlength: 30 },
 
