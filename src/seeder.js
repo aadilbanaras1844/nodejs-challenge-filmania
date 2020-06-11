@@ -77,5 +77,4 @@ let start = async() => {
     let commentResult3 = await commentService.createComment(comments[2]);
     console.log('3 comments added')
 }
-
 start();
