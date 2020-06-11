@@ -17,7 +17,7 @@ Architecture of the project
  * helper folder will have function used in project
  
 ## Run project command
-# npm start
+### npm start
 
 ## Seed databse command
-# npm run seed
+### npm run seed
