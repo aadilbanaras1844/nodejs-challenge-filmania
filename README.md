@@ -15,7 +15,16 @@ Architecture of the project
  * config folder contains all keys, parameters loading etc
  * public folder will have assests  like images, js, css etc
  * helper folder will have function used in project
+
+## Project dependencies
+ * nodejs
+ * npm
+ * mongodb
+ * npm librararies ( which will be installed by command below ) 
  
+## Install libraries command
+ inside the root directory of project run
+ * npm install
 ## Run project command
  * npm start
 
