@@ -3,7 +3,12 @@
 
 let  { filmService, commentService, userService } = require('./services');
 
-// filmService.createFilm()
+/**
+ * Seeder file
+ * It will add a dummy user, 
+ * 3 films and 1 comment against each films
+ */
+
 require('./config/db.mongo')();
 
 let user = {
@@ -77,4 +82,5 @@ let start = async() => {
     let commentResult3 = await commentService.createComment(comments[2]);
     console.log('3 comments added')
 }
+
 start();

@@ -7,7 +7,7 @@ const multer = require('multer');
 const { filmService, commentService } = require("../../services/index");
 var upload = multer({ dest: 'src/public/images/' })
 
-// get Films
+// get Films list
 router.get('/', async function (req, res) {
     try {
         let films = await filmService.getFilms(  );
@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
 });
 
 
-// // get Film Detail
+// // get Film Detail from slug with the comments added against it
 router.get('/:slug', async function (req, res) {
     let slug = req.params.slug;
     try {
@@ -33,8 +33,7 @@ router.get('/:slug', async function (req, res) {
     
 });
 
-
-// // add Film
+// // add Film API
 router.post('/', async function(req, res){
     let params = req.body;
     // console.log(req.body)
@@ -46,11 +45,12 @@ router.post('/', async function(req, res){
     }
 });
 
+// upload  image API
 router.post('/upload-image', upload.single('photo'), async function(req, res){
     return res.json( req.file );
 });
 
-// // Update Fil
+// // Update Film api, but not in use 
 router.post('/:id', async function(req, res){
     let film_id = req.params.id;
     let params = req.body;
@@ -62,7 +62,7 @@ router.post('/:id', async function(req, res){
     }
 });
 
-// // Delete Filmh
+// // Delete Film api but not in use 
 router.delete('/:id', async  function(req, res){
     let film_id = req.params.id;
     try {

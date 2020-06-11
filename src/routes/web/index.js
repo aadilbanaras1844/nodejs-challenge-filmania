@@ -9,14 +9,16 @@ var request = require('request');
    
 const { userService, commentService  } = require("../../services/index");
 const { requireLogin, requireLogOut, defaultMW } = require('./middlewares');
+const baseUrl = 'http://localhost:3000';
 
 router.use( defaultMW );
-const baseUrl = 'http://localhost:3000';
+
+// base route redirecting to /films
 router.get('/', async function (req, res) {
    res.redirect('/films'); 
 });
 
-// films routes
+// films listing route
 router.get('/films', defaultMW, async function (req, res) {
    request({
       uri: '/api/films',
@@ -28,10 +30,12 @@ router.get('/films', defaultMW, async function (req, res) {
 
 });
 
+// create film page
 router.get('/films/create', async function (req, res) {
    res.render('films/create.html',{})
 });
 
+// film detail page
 router.get('/films/:slug', async function (req, res) {
    request({
       uri: '/api/films/'+req.params.slug,
@@ -44,6 +48,7 @@ router.get('/films/:slug', async function (req, res) {
    //res.render('films/detail.html',{})
 });
 
+// add comment for a film
 router.post('/films/:slug/comment', requireLogin, async function (req, res) {
    let params = {
       film_id: req.body.film_id,
@@ -56,11 +61,14 @@ router.post('/films/:slug/comment', requireLogin, async function (req, res) {
 });
 
 // user routes
+
+// login user page
 router.get('/login', requireLogOut, async function (req, res) {
    let { error, register } = req.query;
    return res.render('login.html',{ error, register })
 });
 
+// login action route
 router.post('/login', requireLogOut, async function (req, res) {
    let {email, password} = req.body;
    try {
@@ -73,16 +81,13 @@ router.post('/login', requireLogOut, async function (req, res) {
    }
 });
 
-router.get('/secure', requireLogin, async function (req, res) {
-   // console.log(req.session)
-   return res.json({'status': 'loggedIn'})
-});
-
+// register user page
 router.get('/register', requireLogOut, async function (req, res) {
    let error = req.query["error"];
    res.render('register.html',{ error: error })
 });
 
+// register user action route
 router.post('/register', requireLogOut, async function (req, res) {
    let params = req.body;
    try {
@@ -96,6 +101,7 @@ router.post('/register', requireLogOut, async function (req, res) {
    
 });
 
+// logout action route
 router.get('/logout', requireLogin, async function (req, res) {
    req.session.destroy();
    return res.redirect('/login'); 
