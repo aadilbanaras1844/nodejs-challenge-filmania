@@ -1,5 +1,3 @@
-
-
 const bodyParser = require('body-parser')
 require('dotenv').config()
 
@@ -17,7 +15,7 @@ const app = express();
 var sess = {
     secret: 'keyboard cat',
     cookie: {}
-}   
+}
 app.use(session(sess))
 
 // setting view engine templates
@@ -26,14 +24,18 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view cache', false);
-swig.setDefaults({ cache: false });
+swig.setDefaults({
+    cache: false
+});
 
 // serving static files
 app.use('/static', express.static('src/public'))
 
 
 // for apis
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 
 
