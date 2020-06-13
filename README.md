@@ -15,6 +15,7 @@ Architecture of the project
  * config folder contains all keys, parameters loading etc
  * public folder will have assests  like images, js, css etc
  * helper folder will have function used in project
+ * tests folder for all files of test cases ( mocha, chai used for testing apis & configuration )
 
 ## Project dependencies
  * nodejs
@@ -30,3 +31,6 @@ Architecture of the project
 
 ## Seed databse command
  * npm run seed
+
+## Run test cases command
+ * npm run test

@@ -1,5 +1,5 @@
 const filmsApi = require("./apis/films");
-const web = require('./web');
+const webRoutes = require('./web');
 
 module.exports = function (app) {
 
@@ -7,7 +7,7 @@ module.exports = function (app) {
     app.use('/api/films', filmsApi);
 
     // it will have website routes
-    app.use('/', web);
+    app.use('/', webRoutes);
 
     // Error 404 Catch
     app.use(function (req, res, next) {

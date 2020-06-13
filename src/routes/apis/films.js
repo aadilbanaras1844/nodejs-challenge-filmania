@@ -53,7 +53,9 @@ router.post('/', async function (req, res) {
             data: film
         })
     } catch (error) {
-        return res.json(error)
+        return res.status(500).json({
+            status: false,
+        })
     }
 });
 

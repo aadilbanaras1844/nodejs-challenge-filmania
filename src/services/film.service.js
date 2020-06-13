@@ -26,13 +26,16 @@ module.exports.getFilmBySlug = async (slug) => {
 };
 
 module.exports.createFilm = async function (params) {
-    try {
-        let newFilm = new filmModel(params);
-        const filmAdded = await newFilm.save();
-        return filmAdded;
-    } catch (error) {
-        return error;
-    }
+    return new Promise(async function(resolve, reject){
+        try {
+            let newFilm = new filmModel(params);
+            const filmAdded = await newFilm.save();
+            return resolve(filmAdded)
+        } catch (error) {
+            return reject(error)
+        }
+    })
+
 }
 
 module.exports.updateFilm = async function (id, params) {
